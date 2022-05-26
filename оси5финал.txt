@@ -1,0 +1,83 @@
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main
+{
+    static boolean q = true;
+
+    public static void main(String args[])
+    {
+        Random r = new Random();
+        System.out.println("私　は　兄 ではありません。");
+        System.out.println("Введите число потоков:");
+        Scanner y = new Scanner(System.in);
+        int n = y.nextInt();
+        Producer [] a= new Producer [n];
+        for (int i=0;i<n; i++)
+        {
+            a[i] = new Producer();
+            a[i].x= r.nextInt(300);
+            a[i].number=i+1;
+        }
+        while (q)
+        {
+            int max=-1;
+            long gg=0;
+            for (int i=0;i<n;i++)
+            {
+                for (int j=0;j<n;j++)
+                {
+                    if (a[i].x<a[j].x)
+                    {
+                        Producer V = new Producer();
+                        V=a[i];
+                        a[i]=a[j];
+                        a[j]=V;
+                        max=a[j].number;
+                    }
+                }
+            }
+            a[n-1].st();
+            System.out.println("Поток №"+ max + "запущен ");
+        for (int i=0;i<n; i++)
+        {
+            a[i] = new Producer();
+            a[i].x= r.nextInt(300);
+            a[i].number=i+1;
+        }  
+        System.out.println("Поток №" + max + " завершил свою работу ");
+        a[n-1].slip();
+        max=-1;
+        }
+    }
+static class Producer extends MyThread
+    {   int x;
+        int number;
+        public void st()
+        {
+            Thread f = new Thread();
+            f.start();
+        }
+        public static void slip()
+        {
+            try{sleep(500);}
+            catch(InterruptedException z){}
+        }
+        public static void sleeep()
+        {
+            try{sleep(99999);}
+            catch(InterruptedException z){}
+        }
+        
+    }
+    static class MyThread extends Thread 
+    {
+        public static void slip()
+        {
+            try{sleep(500);}
+            catch(InterruptedException z){}
+        }
+    } 
+}
+
